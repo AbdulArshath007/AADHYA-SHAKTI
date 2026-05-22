@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { createClient } from '@/lib/server'
 import { Provider } from '@supabase/supabase-js'
 
@@ -56,8 +57,14 @@ export async function signup(formData: FormData) {
 export async function signInWithOAuth(provider: Provider) {
   const supabase = await createClient()
 
-  // Ensure origin is available. For Vercel deployments use process.env.VERCEL_URL
-  const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  // Retrieve origin dynamically from incoming request headers
+  const headersList = await headers()
+  const host = headersList.get('host')
+  const protocol = headersList.get('x-forwarded-proto') || 'https'
+  
+  // Use env var first, then try headers, and fall back to localhost
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || 
+                 (host ? `${protocol}://${host}` : 'http://localhost:3000')
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,

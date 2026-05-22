@@ -6,7 +6,7 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
   const searchParams = await props.searchParams;
 
   return (
-    <div className="min-h-[85vh] flex rounded-2xl overflow-hidden shadow-2xl border border-[var(--color-royal-heath-200)] bg-white max-w-6xl mx-auto my-8">
+    <div className="min-h-[75vh] lg:min-h-[85vh] flex rounded-2xl overflow-hidden shadow-xl lg:shadow-2xl border border-[var(--color-royal-heath-200)] bg-white max-w-6xl mx-auto my-4 sm:my-8">
       
       {/* Left Side: Aesthetic Collage */}
       <div className="hidden lg:flex lg:w-1/2 bg-[var(--color-royal-heath-50)] relative items-center justify-center p-12 overflow-hidden">
@@ -57,11 +57,11 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
       </div>
 
       {/* Right Side: Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="font-serif text-3xl font-bold text-[var(--color-royal-heath-900)]">Welcome Back</h1>
-            <p className="text-[var(--color-royal-heath-800)] mt-2">Sign in to your account</p>
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--color-royal-heath-900)]">Welcome Back</h1>
+            <p className="text-[var(--color-royal-heath-800)] text-sm mt-1 sm:mt-2">Sign in to your account</p>
           </div>
 
           {searchParams?.error && (
@@ -97,9 +97,9 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
             </form>
           </div>
 
-          <div className="relative flex items-center py-5">
+          <div className="relative flex items-center py-4">
             <div className="flex-grow border-t border-[var(--color-royal-heath-200)]"></div>
-            <span className="flex-shrink-0 mx-4 text-[var(--color-royal-heath-400)] text-sm">or continue with email</span>
+            <span className="flex-shrink-0 mx-4 text-[var(--color-royal-heath-400)] text-xs sm:text-sm">or continue with email</span>
             <div className="flex-grow border-t border-[var(--color-royal-heath-200)]"></div>
           </div>
 
@@ -120,9 +120,14 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--color-royal-heath-950)] mb-1" htmlFor="password">
-                Password
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-[var(--color-royal-heath-950)]" htmlFor="password">
+                  Password
+                </label>
+                <Link href="/forgot-password" className="text-xs font-semibold text-[var(--color-royal-heath-600)] hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
               <input
                 id="password"
                 name="password"

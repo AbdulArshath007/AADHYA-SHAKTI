@@ -87,3 +87,51 @@ export async function logout() {
   await supabase.auth.signOut()
   redirect('/login')
 }
+
+export async function forgotPassword(formData: FormData) {
+  const supabase = await createClient()
+
+  const email = formData.get('email') as string
+
+  if (!email) {
+    redirect('/forgot-password?error=' + encodeURIComponent('Email is required.'))
+  }
+
+  // Retrieve origin dynamically from incoming request headers
+  const headersList = await headers()
+  const host = headersList.get('host')
+  const protocol = headersList.get('x-forwarded-proto') || 'https'
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || 
+                 (host ? `${protocol}://${host}` : 'http://localhost:3000')
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${origin}/auth/callback?next=/update-password`,
+  })
+
+  if (error) {
+    redirect('/forgot-password?error=' + encodeURIComponent(error.message))
+  }
+
+  redirect('/forgot-password?message=' + encodeURIComponent('Password reset link sent! Please check your email.'))
+}
+
+export async function updatePassword(formData: FormData) {
+  const supabase = await createClient()
+
+  const password = formData.get('password') as string
+
+  if (!password || password.length < 6) {
+    redirect('/update-password?error=' + encodeURIComponent('Password must be at least 6 characters.'))
+  }
+
+  const { error } = await supabase.auth.updateUser({
+    password,
+  })
+
+  if (error) {
+    redirect('/update-password?error=' + encodeURIComponent(error.message))
+  }
+
+  redirect('/login?message=' + encodeURIComponent('Your password has been successfully updated. Please sign in.'))
+}
+

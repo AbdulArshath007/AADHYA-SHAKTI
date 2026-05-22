@@ -4,11 +4,11 @@ import Link from 'next/link'
 export default async function SignupPage(props: { searchParams: Promise<{ error?: string }> }) {
   const searchParams = await props.searchParams;
   return (
-    <div className="flex min-h-[80vh] items-center justify-center p-4 my-8">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-sm border border-[var(--color-royal-heath-200)] p-8">
-        <div className="text-center mb-8">
-          <h1 className="font-serif text-3xl font-bold text-[var(--color-royal-heath-900)]">Join AADHYA SHAKTI</h1>
-          <p className="text-[var(--color-royal-heath-800)] mt-2">Create your account to get started</p>
+    <div className="flex min-h-[70vh] lg:min-h-[80vh] items-center justify-center p-2 sm:p-4 my-4 sm:my-8">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-md border border-[var(--color-royal-heath-200)] p-6 sm:p-8">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--color-royal-heath-900)]">Join AADHYA SHAKTI</h1>
+          <p className="text-[var(--color-royal-heath-800)] text-sm mt-1 sm:mt-2">Create your account to get started</p>
         </div>
 
         {searchParams?.error && (
